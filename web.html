@@ -1,33 +1,171 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        main {
-            background-color: white;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu Examples — HTML & CSS</title>
+  <style>
+    /* ----------------------
+       Basic reset & variables
+       ---------------------- */
+    :root{
+      --bg:#0f1724; /* dark background */
+      --card:#0b1220;
+      --accent:#06b6d4;
+      --muted:#9aa4b2;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, Arial; margin:0; background:linear-gradient(180deg,#071021 0%,#081926 100%); color:#e6eef6}
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1100px; margin:28px auto; padding:20px}
+
+    /* ======================
+       Top horizontal navbar
+       ====================== */
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; background:var(--card); padding:10px 16px; border-radius:12px; box-shadow:0 6px 18px rgba(2,6,23,0.6)
+    }
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:40px; height:40px; background:linear-gradient(135deg,var(--accent),#3b82f6); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700}
+    .nav-links{display:flex; gap:8px; align-items:center}
+    .nav-links > a{padding:8px 12px; border-radius:8px; transition:background .18s}
+    .nav-links > a:hover{background:var(--glass)}
+
+    /* Dropdown */
+    .dropdown{position:relative}
+    .dropdown-toggle{display:flex; align-items:center; gap:8px; cursor:pointer}
+    .dropdown-menu{
+      position:absolute; top:calc(100% + 8px); left:0; min-width:180px; background:var(--card); border-radius:10px; padding:8px; box-shadow:0 8px 26px rgba(2,6,23,0.6); display:none; z-index:40
+    }
+    .dropdown-menu a{display:block; padding:8px 10px; border-radius:8px}
+    .dropdown:hover .dropdown-menu{display:block}
+
+    /* Right side actions */
+    .actions{display:flex; gap:8px; align-items:center}
+    .btn{background:transparent; border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:10px}
+
+    /* ======================
+       Responsive hamburger
+       ====================== */
+    .hamburger{display:none; width:44px; height:44px; align-items:center; justify-content:center; border-radius:10px}
+    .mobile-menu{display:none}
+
+    /* ======================
+       Sidebar vertical menu
+       ====================== */
+    .layout{display:grid; grid-template-columns:260px 1fr; gap:18px; margin-top:20px}
+    .sidebar{background:var(--card); padding:12px; border-radius:12px}
+    .side-item{padding:10px 12px; border-radius:8px; margin-bottom:6px; cursor:pointer; display:flex; align-items:center; justify-content:space-between}
+    .side-item:hover{background:var(--glass)}
+    .submenu{padding-left:8px; padding-top:6px; display:none}
+    .side-item.open + .submenu{display:block}
+    .muted{color:var(--muted); font-size:0.95rem}
+
+    /* ======================
+       Small screens
+       ====================== */
+    @media (max-width:820px){
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      .mobile-menu{display:block; margin-top:10px}
+      .layout{grid-template-columns:1fr;}
+      .sidebar{order:2}
+    }
+
+    /* Small visual helper for demo */
+    h2{margin:6px 0 12px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:16px; border-radius:12px}
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Website</h1>
-    </header>
+  <div class="container">
+
+    <!-- Top navigation -->
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo">HG</div>
+        <div>
+          <div style="font-weight:700">MySite</div>
+          <div class="muted" style="font-size:0.85rem">clean menus demo</div>
+        </div>
+      </div>
+
+      <div class="nav-links" aria-label="Main navigation">
+        <a href="#">Home</a>
+        <a href="#">Docs</a>
+        <div class="dropdown">
+          <div class="dropdown-toggle">Services ▾</div>
+          <div class="dropdown-menu" role="menu">
+            <a href="#">Web Development</a>
+            <a href="#">API Integration</a>
+            <a href="#">DevOps & CI/CD</a>
+          </div>
+        </div>
+        <a href="#">Pricing</a>
+      </div>
+
+      <div class="actions">
+        <button class="btn">Sign in</button>
+        <button class="btn">Get Started</button>
+        <div class="hamburger btn" id="hamburger" aria-label="Open mobile menu">☰</div>
+      </div>
+    </nav>
+
+    <!-- Mobile nav (hidden on desktop) -->
+    <div class="mobile-menu card" id="mobileMenu" style="display:none">
+      <a href="#" style="display:block; padding:8px 6px">Home</a>
+      <a href="#" style="display:block; padding:8px 6px">Docs</a>
+      <details style="padding:6px 4px; margin-top:6px; border-radius:6px">
+        <summary style="cursor:pointer">Services</summary>
+        <a href="#" style="display:block; padding:6px 8px">Web Dev</a>
+        <a href="#" style="display:block; padding:6px 8px">DevOps</a>
+      </details>
+      <a href="#" style="display:block; padding:8px 6px">Pricing</a>
+    </div>
+
+    <!-- Page layout with sidebar -->
+    <div class="layout">
+      <aside class="sidebar card" aria-label="Sidebar navigation">
+        <h2 style="margin-top:0">Dashboard</h2>
+        <div class="side-item" data-toggle="true">Overview <span class="muted">›</span></div>
+        <div class="side-item" id="projectsToggle">Projects <span class="muted">+</span></div>
+        <div class="submenu">
+          <a style="display:block; padding:8px 10px">Active</a>
+          <a style="display:block; padding:8px 10px">Archived</a>
+        </div>
+        <div class="side-item" id="settingsToggle">Settings <span class="muted">+</span></div>
+        <div class="submenu">
+          <a style="display:block; padding:8px 10px">Profile</a>
+          <a style="display:block; padding:8px 10px">Billing</a>
+        </div>
+      </aside>
+    </div>
+
+  </div>
+
+  <script>
+    // Hamburger toggle for mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger?.addEventListener('click', ()=>{
+      if(mobileMenu.style.display === 'none' || mobileMenu.style.display === '') mobileMenu.style.display = 'block';
+      else mobileMenu.style.display = 'none';
+    });
+
+    // Sidebar collapses
+    document.querySelectorAll('#projectsToggle, #settingsToggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        // toggle open state on the clicked element
+        const next = btn.nextElementSibling;
+        const isOpen = next.style.display === 'block';
+        // close any other open submenus (optional) 
+        document.querySelectorAll('.submenu').forEach(s=> s.style.display='none');
+        // set display
+        next.style.display = isOpen ? 'none' : 'block';
+      });
+    });
+  </script>
 </body>
 </html>
